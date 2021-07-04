@@ -1,0 +1,374 @@
+swagger: "2.0"
+info:
+  description: "Documentacion Delilah Restó."
+  version: "1.0.0"
+  title: "Delilah Restó"
+tags:
+- name: "user"
+  description: "Operaciones acerca de usuarios"
+- name: "products"
+  description: "Productos del restaurante"
+- name: "order"
+  description: "Pedidos realizados"
+schemes:
+- "https"
+- "http"
+paths:
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Creacion de usuario"
+      description: "Se crea un nuevo usuario"
+      operationId: "createUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Se necesita objeto para enviar datos"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Usuario creado"
+        "400":
+          description: "Datos invalidos"
+    get:
+      tags:
+      - "user"
+      summary: "listar usuario"
+      description: "Listar todos los usuarios"
+      operationId: "listUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Listado correcto"
+        "400":
+          description: "Error al listar"
+  /user/login:
+    post:
+      tags:
+      - "user"
+      summary: "Inicio de sesion usuario"
+      description: "Inicio de sesion de usuario mediante el formulario de log in que se implementara en la web"
+      operationId: "loginUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto UserLogin es necesario para ingresar"
+        required: true
+        schema:
+          $ref: "#/definitions/UserLogin"
+      responses:
+        "200":
+          description: "Log in correcto"
+        "400":
+          description: "Datos invalidos"
+  /user/id/:
+    get:
+      tags:
+      - "user"
+      summary: "listar usuario por id"
+      description: "Conseguir un usuario del cual se conozca su id"
+      operationId: "listUserById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "query"
+        description: "Id del usuario que se buscara"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Listado correcto"
+        "400":
+          description: "Error al listar"
+      
+    put:
+      tags:
+      - "user"
+      summary: "Actualizacion de usuario"
+      description: "Se actualiza un usuario"
+      operationId: "updateUserById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "query"
+        description: "Id del usuario que se actualizara"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Se necesita objeto para enviar datos"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Usuario actualizado"
+        "400":
+          description: "Datos invalidos"
+          
+    delete:
+      tags:
+      - "user"
+      summary: "Eliminacion de usuario"
+      description: "Se elimina un usuario por id"
+      operationId: "deleteUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "query"
+        description: "Id del usuario que se eliminara"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Usuario eliminado"
+        "400":
+          description: "Error al eliminar"
+          
+  /products:
+    post:
+      tags:
+      - "products"
+      summary: "Creacion de producto"
+      description: "Se crea un nuevo producto"
+      operationId: "createProducts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Se necesita objeto para enviar datos"
+        required: true
+        schema:
+          $ref: "#/definitions/Products"
+      responses:
+        "200":
+          description: "Usuario creado"
+        "400":
+          description: "Datos invalidos"
+    get:
+      tags:
+      - "products"
+      summary: "Listar productos"
+      description: "Listar todos los productos"
+      operationId: "listProducts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Listado correcto"
+        "400":
+          description: "Error al listar"
+
+  /products/id:
+    put:
+      tags:
+      - "products"
+      summary: "Actualizacion de productos"
+      description: "Se actualiza un producto"
+      operationId: "updateProductsById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "query"
+        description: "Id del producto que se actualizara"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Se necesita objeto para enviar datos"
+        required: true
+        schema:
+          $ref: "#/definitions/Products"
+      responses:
+        "200":
+          description: "Producto actualizado"
+        "400":
+          description: "Datos invalidos"
+          
+    delete:
+      tags:
+      - "products"
+      summary: "Eliminacion de producto"
+      description: "Se elimina un producto por id"
+      operationId: "deleteProductsById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "query"
+        description: "Id del producto que se eliminara"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Producto eliminado"
+        "400":
+          description: "Error al eliminar"
+          
+  /order:
+    get:
+      tags:
+      - "order"
+      summary: "Listar pedidos"
+      description: "Listar todos los pedidos"
+      operationId: "listOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Listado correcto"
+        "400":
+          description: "Error al listar"
+    post:
+      tags:
+      - "order"
+      summary: "Crear nuevo pedido"
+      description: "Se crea un nuevo pedido"
+      operationId: "createOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Se necesita objeto para enviar datos"
+        required: true
+        schema:
+          $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "Pedido creado"
+        "400":
+          description: "Datos invalidos"
+          
+  /order/id:
+    put:
+      tags:
+      - "order"
+      summary: "Actualizacion de pedido"
+      description: "Se actualiza un pedido mediante id"
+      operationId: "updateOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "query"
+        description: "Id del pedido que se actualizara"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Se necesita objeto para enviar datos"
+        required: true
+        schema:
+          $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "Pedido actualizado"
+        "400":
+          description: "Datos invalidos"
+    delete:
+      tags:
+      - "order"
+      summary: "Eliminacion de pedido"
+      description: "Se elimina un pedido por id"
+      operationId: "deleteOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "query"
+        description: "Id del pedido que se eliminara"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Pedido eliminado"
+        "400":
+          description: "Error al eliminar"
+    
+          
+          
+definitions:
+  User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        lastName:
+          type: "string"
+        email:
+          type: "string"
+        password:
+          type: "string"
+        
+  UserLogin:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+        
+  Products:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      price:
+        type: "integer"
+        
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      products:
+        type: "object"
+      
+
