@@ -14,7 +14,7 @@ schemes:
 - "https"
 - "http"
 paths:
-  /user:
+  /api/usuario/registro:
     post:
       tags:
       - "user"
@@ -37,6 +37,7 @@ paths:
           description: "Usuario creado"
         "400":
           description: "Datos invalidos"
+  /api/usuario/user:
     get:
       tags:
       - "user"
@@ -52,7 +53,7 @@ paths:
           description: "Listado correcto"
         "400":
           description: "Error al listar"
-  /user/login:
+  /api/usuario/login:
     post:
       tags:
       - "user"
@@ -75,7 +76,7 @@ paths:
           description: "Log in correcto"
         "400":
           description: "Datos invalidos"
-  /user/id/:
+  /api/usuario/id/:id:
     get:
       tags:
       - "user"
@@ -148,7 +149,7 @@ paths:
         "400":
           description: "Error al eliminar"
           
-  /products:
+  /api/products:
     post:
       tags:
       - "products"
@@ -187,7 +188,7 @@ paths:
         "400":
           description: "Error al listar"
 
-  /products/id:
+  /api/products/:id:
     put:
       tags:
       - "products"
@@ -238,7 +239,7 @@ paths:
         "400":
           description: "Error al eliminar"
           
-  /order:
+  /api/order:
     get:
       tags:
       - "order"
@@ -267,7 +268,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Se necesita objeto para enviar datos"
+        description: "Se envia la descripcion y los id de los diferentes productos, ademas, cuenta con el parametro estado para monitorear el envio"
         required: true
         schema:
           $ref: "#/definitions/Order"
@@ -277,7 +278,22 @@ paths:
         "400":
           description: "Datos invalidos"
           
-  /order/id:
+  /api/order/:id:
+    get:
+      tags:
+      - "order"
+      summary: "Listar pedidos"
+      description: "Listar todos los pedidos segun la id del usuario logueado"
+      operationId: "listOrderById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Listado correcto"
+        "400":
+          description: "Error al listar"
     put:
       tags:
       - "order"
@@ -299,7 +315,7 @@ paths:
         description: "Se necesita objeto para enviar datos"
         required: true
         schema:
-          $ref: "#/definitions/Order"
+          $ref: "#/definitions/OrderUpdate"
       responses:
         "200":
           description: "Pedido actualizado"
@@ -336,21 +352,25 @@ definitions:
         id:
           type: "integer"
           format: "int64"
-        name:
+        usuario:
           type: "string"
-        lastName:
+        nombre:
           type: "string"
-        email:
+        telefono:
           type: "string"
-        password:
+        direccion:
           type: "string"
+        contrasena:
+          type: "string"
+        id_rol:
+          type: "integer"
         
   UserLogin:
     type: "object"
     properties:
-      email:
+      usuario:
         type: "string"
-      password:
+      contrasena:
         type: "string"
         
   Products:
@@ -358,9 +378,11 @@ definitions:
     properties:
       id:
         type: "integer"
-      name:
+      nombre:
         type: "string"
-      price:
+      precio:
+        type: "integer"
+      descripcion:
         type: "integer"
         
   Order:
@@ -368,7 +390,19 @@ definitions:
     properties:
       id:
         type: "integer"
-      products:
+      descripcion:
         type: "object"
+      estado:
+        type: "string"
+      id_productos:
+        type: "integer"
+  
+  OrderUpdate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      estado:
+        type: "string"
       
 
